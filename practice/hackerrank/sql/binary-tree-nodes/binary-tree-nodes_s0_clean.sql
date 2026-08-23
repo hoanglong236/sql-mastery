@@ -1,0 +1,9 @@
+SELECT
+    B1.N,
+    CASE
+        WHEN B1.P IS NULL THEN 'Root'
+        WHEN EXISTS (SELECT 1 FROM BST B2 WHERE B2.P = B1.N) THEN 'Inner'
+        ELSE 'Leaf'
+    END AS NODE_TYPE
+FROM BST B1
+ORDER BY B1.N;
