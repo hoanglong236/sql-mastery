@@ -1,0 +1,19 @@
+SELECT DOCTOR, PROFESSOR, SINGER, ACTOR
+FROM (
+    SELECT
+        NAME,
+        OCCUPATION,
+        ROW_NUMBER() OVER (PARTITION BY OCCUPATION ORDER BY NAME) AS RN
+    FROM OCCUPATIONS
+)
+PIVOT (
+    MAX(NAME)
+    FOR OCCUPATION
+    IN (
+        'Doctor' AS DOCTOR,
+        'Professor' AS PROFESSOR,
+        'Singer' AS SINGER,
+        'Actor' AS ACTOR
+    )
+)
+ORDER BY RN;
